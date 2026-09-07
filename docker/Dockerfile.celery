@@ -1,0 +1,25 @@
+# Dockerfile for Celery worker
+
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application
+COPY app app/
+COPY pyproject.toml .env.example ./
+
+# Create logs directory
+RUN mkdir -p logs
+
+# Run Celery worker
+CMD ["celery", "-A", "app.tasks", "worker", "--loglevel=info"]
