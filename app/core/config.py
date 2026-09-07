@@ -46,7 +46,12 @@ class Settings(BaseSettings):
     ADMIN_PASSWORD: str = ""  # Must be set via environment variable to enable bootstrap
 
     # CORS
-    CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:8000"]
+    CORS_ORIGINS: List[str] = [
+        "http://localhost:3000",
+        "http://localhost:8000",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:8000",
+    ]
 
     # LLM Configuration
     OPENAI_API_KEY: str = ""  # Must be set via environment variable
